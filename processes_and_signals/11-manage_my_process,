@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# This script manages the manage_my_process daemon
+PID_FILE="/var/run/my_process.pid"
+PROCESS_NAME="manage_my_process"
+
+start() {
+    nohup ./$PROCESS_NAME &> /dev/null &
+    echo $! > "$PID_FILE"
+    echo "$PROCESS_NAME started"
+}
+
+stop() {
+    if [[ -f "$PID_FILE" ]]; then
+        kill $(cat "$PID_FILE") && rm -f "$PID_FILE"
+        echo "$PROCESS_NAME stopped"
+    else
+        echo "$PROCESS_NAME is not running"
+    fi
+}
+
+restart() {
+    stop
+    start
+    echo "$PROCESS_NAME restarted"
+}
+
+case "$1" in
+    start) start ;;
+    stop) stop ;;
+    restart) restart ;;
+    *) echo "Usage: $0 {start|stop|restart}" ;;
+esac

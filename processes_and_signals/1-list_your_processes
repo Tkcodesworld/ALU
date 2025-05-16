@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Display all processes for all users, including those without a TTY
+ps -eo user,cmd --sort=-%cpu | head -n 20
+
+# Show process hierarchy using pstree (ensure pstree is installed)
+if command -v pstree &> /dev/null; then
+    pstree -aup
+else
+    echo "pstree command not found. Install pstree for a hierarchical view."
+fi

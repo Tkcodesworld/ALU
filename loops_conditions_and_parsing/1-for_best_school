@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#Fpr loop that writes input ten times
+for _ in $(seq 1 10)
+do
+  echo "Best School"
+done
